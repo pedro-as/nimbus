@@ -1,5 +1,6 @@
 package ga.electrocaatin.nimbus.controller;
 
+import ga.electrocaatin.nimbus.exception.StorageFileNotFoundException;
 import ga.electrocaatin.nimbus.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -52,5 +53,10 @@ public class UploadController {
                 file.getOriginalFilename() + " successfully uploaded.");
 
         return "redirect:/";
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException e) {
+        return ResponseEntity.notFound().build();
     }
 }
